@@ -10,7 +10,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,20 +22,22 @@ body {
 }
 
 /* Button */
+button {
+  font-family: "Poppins", sans-serif;
+}
+
 .btn {
   padding: 12px;
   border-radius: 30px;
   font-size: 16px;
   cursor: pointer;
   transition: all ease 0.3s;
-  font-family: 'Poppins', sans-serif;
   border: none;
 }
 
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
-
 }
 
 .btn-primary:hover {
@@ -49,7 +51,7 @@ body {
 
 /* Input */
 .form__input {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 13px 20px;
   outline: none;
   border: 3px solid #ddd;
@@ -67,5 +69,5 @@ a {
 }
 
 input[type="file"] {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
