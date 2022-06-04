@@ -1,0 +1,45 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 100px 10px;
+}
+
+.auth-image {
+    width: 100%;
+}
+
+.form-wrapper {
+    width: 100%;
+    padding: 0 80px;
+}
+
+.form__title {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.caption {
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form label {
+    margin-bottom: 10px;
+}
+
+.form button {
+    margin: 10px 0;
+}
