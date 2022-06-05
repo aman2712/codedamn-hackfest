@@ -1,9 +1,19 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Home, Login, Register, Logout, CreatePost, EditPost, UserProfile, EditProfile } from "./pages";
+import {
+  Home,
+  Login,
+  Register,
+  Logout,
+  CreatePost,
+  EditPost,
+  UserProfile,
+  EditProfile,
+} from "./pages";
 import { Navbar } from "./components";
 import { AuthProvider, PostsProvider } from "./context";
 import { ProtectedRoutes, NotLoggedInRoutes } from "./utils";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -27,6 +37,7 @@ function App() {
           </Routes>
         </div>
       </PostsProvider>
+      <ToastContainer />
     </AuthProvider>
   );
 }

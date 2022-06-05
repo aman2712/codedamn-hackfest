@@ -1,6 +1,7 @@
 import { createContext, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 export const PostsContext = createContext();
 
@@ -13,7 +14,7 @@ const PostsProvider = ({ children }) => {
       const { data } = await axios.get("/api/posts");
       setPosts(data);
     } catch (error) {
-      // toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -22,7 +23,7 @@ const PostsProvider = ({ children }) => {
       const { data } = await axios.get(`/api/posts/${id}`);
       return data;
     } catch (error) {
-      // toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -40,7 +41,7 @@ const PostsProvider = ({ children }) => {
         config
       );
     } catch (error) {
-      // Will do later
+      toast.error(error.response.data.message);
     }
   };
 
@@ -59,8 +60,7 @@ const PostsProvider = ({ children }) => {
         config
       );
     } catch (error) {
-      // Will do later
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -75,8 +75,7 @@ const PostsProvider = ({ children }) => {
 
       const result = await axios.delete(`/api/posts/delete/${id}`, config);
     } catch (error) {
-      // Will do later
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -90,8 +89,7 @@ const PostsProvider = ({ children }) => {
       const result = await axios.put(`/api/posts/like/${_id}`, null, config);
       return result.data;
     } catch (error) {
-      // Will do later
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -102,14 +100,16 @@ const PostsProvider = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      console.log(postId, content)
-      const result = await axios.post(`/api/posts/comment`, { postId, content }, config);
+      const result = await axios.post(
+        `/api/posts/comment`,
+        { postId, content },
+        config
+      );
       return result.data;
     } catch (error) {
-      // Will do later
-      console.log(error);
+      toast.error(error.response.data.message);
     }
-  }
+  };
 
   return (
     <PostsContext.Provider
@@ -122,7 +122,7 @@ const PostsProvider = ({ children }) => {
         getPost,
         editPost,
         deletePost,
-        addComment
+        addComment,
       }}
     >
       {children}
