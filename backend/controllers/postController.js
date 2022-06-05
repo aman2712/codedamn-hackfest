@@ -42,7 +42,7 @@ const getPost = asyncHandler(async (req, res) => {
     res.status(201).json(post);
   } else {
     res.status(404);
-    throw new Error("Product not found");
+    throw new Error("Post not found");
   }
 });
 
@@ -85,7 +85,7 @@ const updatePost = asyncHandler(async (req, res) => {
     }
   } else {
     res.status(404);
-    throw new Error("Product not found");
+    throw new Error("Post not found");
   }
 });
 
@@ -99,8 +99,8 @@ const deletePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
   if (post) {
-    if (post.userId === req.user.id) {
-      await product.remove();
+    if (post.userId.toString() === req.user.id) {
+      await post.remove();
       res.json({ message: "Post deleted" });
     } else {
       res.status(400);
@@ -108,7 +108,7 @@ const deletePost = asyncHandler(async (req, res) => {
     }
   } else {
     res.status(404);
-    throw new Error("Product not found");
+    throw new Error("Post not found");
   }
 });
 

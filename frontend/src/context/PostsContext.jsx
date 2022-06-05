@@ -11,6 +11,7 @@ const PostsProvider = ({ children }) => {
   const getPosts = async () => {
     try {
       const { data } = await axios.get("/api/posts");
+      console.log(data);
       setPosts(data);
     } catch (error) {
       // toast.error(error.response.data.message);
@@ -53,12 +54,27 @@ const PostsProvider = ({ children }) => {
         },
       };
 
-      console.log(content, image, githubLink, liveDemoLink);
       const result = await axios.put(
         `/api/posts/update/${id}`,
         { content, image, githubLink, liveDemoLink },
         config
       );
+    } catch (error) {
+      // Will do later
+      console.log(error);
+    }
+  };
+
+  const deletePost = async (id) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const result = await axios.delete(`/api/posts/delete/${id}`, config);
     } catch (error) {
       // Will do later
       console.log(error);
@@ -90,6 +106,7 @@ const PostsProvider = ({ children }) => {
         setPosts,
         getPost,
         editPost,
+        deletePost,
       }}
     >
       {children}

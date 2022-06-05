@@ -87,8 +87,7 @@ const Home = () => {
                   <AiOutlineEye className={styles.icons} size={21} />
                 </a>
               )}
-
-              <PostMenu id={post._id} />
+              {post.userId._id === user._id && <PostMenu id={post._id} />}
             </div>
           </div>
         ))}
