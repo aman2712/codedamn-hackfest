@@ -1,0 +1,42 @@
+.userProfile {
+    padding: 20px 100px;
+}
+
+.userDetails {
+    display: flex;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.userAvatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    border: 3px solid black;
+    margin-right: 30px;
+}
+
+.name {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.posts {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.editProfileBtn {
+    display: block;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    .userProfile {
+        padding: 20px;
+    }
+
+    .posts {
+        width: 100%;
+    }
+}

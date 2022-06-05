@@ -28,6 +28,14 @@ const Navbar = () => {
                     </li>
                     <li className="navbar__item">
                         <NavLink
+                            to={`/user/${user._id}`}
+                            className={({ isActive }) => isActive ? "navbar__link active" : "navbar__link"}
+                        >
+                            Profile
+                        </NavLink>
+                    </li>
+                    <li className="navbar__item">
+                        <NavLink
                             to={"/logout"}
                             className={({ isActive }) => isActive ? "navbar__link active" : "navbar__link"}
                         >
@@ -65,7 +73,7 @@ const Navbar = () => {
             <div className="container">
                 <NavLink
                     to={"/"}
-                    className="navbar__link navbar__logo"
+                    className="navbar__link navbar__logo active"
                 >
                     #100DaysOfCode
                 </NavLink>

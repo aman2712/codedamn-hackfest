@@ -22,6 +22,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
+      avatar: user.avatar,
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
@@ -39,7 +40,7 @@ const authUser = asyncHandler(async (req, res) => {
  */
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { avatar, name, email, password } = req.body;
 
   if (name === "" || email === "" || password === "") {
     res.status(400);
@@ -54,6 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
+    avatar,
     name,
     email,
     password,
@@ -62,9 +64,9 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
+      avatar: user.avatar,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -75,18 +77,19 @@ const registerUser = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get single user
- * @route   GET /api/users/profile
+ * @route   GET /api/users/profile/:id
  * @access  Private
  */
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.params.id);
 
-  const posts = await Post.find({ userId: req.user.id });
+  const posts = await Post.find({ userId: req.params.id }).sort({ createdAt: 'desc' })
 
   if (user) {
     res.json({
       id: user.id,
+      avatar: user.avatar,
       name: user.name,
       email: user.email,
       posts,
@@ -97,4 +100,33 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, getUserProfile };
+/**
+ * @desc    Edit user profile
+ * @route   PUT /api/users/profile/:id
+ * @access  Private
+ */
+
+const editUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.avatar = req.body.avatar || user.avatar
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      avatar: updatedUser.avatar,
+      token: generateToken(updatedUser._id),
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+export { authUser, registerUser, getUserProfile, editUserProfile };

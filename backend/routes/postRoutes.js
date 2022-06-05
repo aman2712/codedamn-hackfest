@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import {
+  addComment,
   createPost,
   deletePost,
   getAllPosts,
@@ -16,5 +17,6 @@ router.route("/").get(getAllPosts);
 router.route("/:id").get(getPost);
 router.route("/update/:id").put(protect, updatePost);
 router.route("/delete/:id").delete(protect, deletePost);
+router.route("/comment/").post(protect, addComment)
 
 export default router;

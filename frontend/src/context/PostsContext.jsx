@@ -11,7 +11,6 @@ const PostsProvider = ({ children }) => {
   const getPosts = async () => {
     try {
       const { data } = await axios.get("/api/posts");
-      console.log(data);
       setPosts(data);
     } catch (error) {
       // toast.error(error.response.data.message);
@@ -96,6 +95,22 @@ const PostsProvider = ({ children }) => {
     }
   };
 
+  const addComment = async (postId, content) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      console.log(postId, content)
+      const result = await axios.post(`/api/posts/comment`, { postId, content }, config);
+      return result.data;
+    } catch (error) {
+      // Will do later
+      console.log(error);
+    }
+  }
+
   return (
     <PostsContext.Provider
       value={{
@@ -107,6 +122,7 @@ const PostsProvider = ({ children }) => {
         getPost,
         editPost,
         deletePost,
+        addComment
       }}
     >
       {children}

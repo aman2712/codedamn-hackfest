@@ -2,6 +2,20 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
+const commentSchema = mongoose.Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+})
+
 const postSchema = mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
@@ -24,7 +38,8 @@ const postSchema = mongoose.Schema({
     likes: {
         type: Array,
         required: true
-    }
+    },
+    comments: [commentSchema]
 }, {
     timestamps: true
 })

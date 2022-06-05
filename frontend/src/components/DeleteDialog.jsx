@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import styles from "../styles/components/deleteDialog.module.css";
+import styles from "../styles/components/dialog.module.css";
 
 function DeleteDialog({ isOpen, onDelete, onClose }) {
   return (

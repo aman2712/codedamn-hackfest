@@ -6,6 +6,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
+import leaderboardRoutes from './routes/leaderboardRoutes.js'
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.use(express.json())
 
 app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
+app.use('/api/leaderboard', leaderboardRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

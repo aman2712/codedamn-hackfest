@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-const Register = () => {
+const EditProfile = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [avatar, setAvatar] = useState("")
     const [submitButtionDisabled, setSubmitButtonDisabled] = useState(true);
 
-    const { handleRegister } = useContext(AuthContext);
+    const { handleEditProfile, user } = useContext(AuthContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        handleRegister(name, email, password, avatar);
+        handleEditProfile(name, email, avatar);
     };
 
     const generateAvatar = () => {
@@ -25,15 +24,17 @@ const Register = () => {
     };
 
     useEffect(() => {
-        generateAvatar();
+        setName(user.name);
+        setEmail(user.email);
+        setAvatar(user.avatar);
     }, [])
 
     useEffect(() => {
-        if (name.length > 3 && email.length > 3 && password.length >= 6) {
+        if (name.length > 3 && email.length > 3) {
             return setSubmitButtonDisabled(false);
         }
         setSubmitButtonDisabled(true);
-    }, [name, email, password]);
+    }, [name, email]);
 
     return (
         <div className="wrapper">
@@ -41,7 +42,7 @@ const Register = () => {
                 <img src="/images/auth.jpg" alt="A person authentication on a website" className="auth-image" />
             </div>
             <div className="form-wrapper">
-                <h2 className="form__title">Register</h2>
+                <h2 className="form__title">Edit Profile</h2>
                 <form onSubmit={handleSubmit} className="form">
                     <div>
                         <div className="form__avatarWrap">
@@ -73,20 +74,8 @@ const Register = () => {
                             required
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            className="form__input"
-                            placeholder="At least 6 character"
-                            id={"password"}
-                            required
-                        />
-                    </div>
                     <button type={"submit"} disabled={submitButtionDisabled} className="btn btn-primary">
-                        Register
+                        Update Profile
                     </button>
                 </form>
             </div>
@@ -94,4 +83,4 @@ const Register = () => {
     );
 };
 
-export default Register
+export default EditProfile

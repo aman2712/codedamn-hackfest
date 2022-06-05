@@ -4,6 +4,7 @@
   border: 3px solid #eee;
   border-radius: 15px;
   width: 200px;
+  z-index: 90;
   padding: 5px;
 }
 

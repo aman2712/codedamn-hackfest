@@ -25,14 +25,32 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    const handleRegister = async (name, email, password) => {
+    const handleRegister = async (name, email, password, avatar) => {
         try {
-            const result = await axios.post("/api/users", { name, email, password });
+            const result = await axios.post("/api/users", { name, email, password, avatar });
             if (!result.data) throw new Error("");
 
             localStorage.setItem("user", JSON.stringify(result.data));
             setUser(result.data);
             navigate("/");
+        } catch (error) {
+            // toast.error(error.response.data.message);
+        }
+    };
+
+    const handleEditProfile = async (name, email, avatar) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+            const result = await axios.put(`/api/users/profile/${user._id}`, { name, email, avatar }, config);
+
+            localStorage.setItem("user", JSON.stringify(result.data));
+            setUser(result.data);
+            navigate(`/user/${result.data._id}`);
         } catch (error) {
             // toast.error(error.response.data.message);
         }
@@ -44,9 +62,29 @@ const AuthProvider = ({ children }) => {
         navigate("/login");
     };
 
+    const getUserProfile = async (id) => {
+        try {
+            const result = await axios.get(`/api/users/profile/${id}`);
+
+            return result.data;
+        } catch (error) {
+            // toast.error(error.response.data.message);
+        }
+    }
+
+    const getLeaderboard = async () => {
+        try {
+            const result = await axios.get("/api/leaderboard");
+
+            return result.data;
+        } catch (error) {
+            /// 
+        }
+    }
+
     return (
         <AuthContext.Provider
-            value={{ user, handleLogin, handleRegister, handleLogout }}
+            value={{ user, handleLogin, handleRegister, handleLogout, getUserProfile, handleEditProfile, getLeaderboard }}
         >
             {children}
         </AuthContext.Provider>

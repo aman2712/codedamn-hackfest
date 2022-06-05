@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Post from "../models/postModel.js";
+import User from "../models/userModel.js";
 
 /**
  * @desc    Create a post
@@ -19,6 +20,10 @@ const createPost = asyncHandler(async (req, res) => {
     userId: req.user.id,
   });
 
+  const user = await User.findById(req.user.id)
+  user.score = user.score + 10
+  await user.save()
+
   if (post) {
     res.status(201).json({ message: "Post created successfully" });
   } else {
@@ -36,7 +41,10 @@ const createPost = asyncHandler(async (req, res) => {
 const getPost = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
-  const post = await Post.findById(id);
+  const post = await Post.findById(id).sort("comments -createdAt").populate({
+    path: "comments.userId",
+    select: "name avatar",
+  })
 
   if (post) {
     res.status(201).json(post);
@@ -56,7 +64,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({}).sort("-createdAt").populate({
     path: "userId",
     select: "-password",
-  });
+  })
 
   res.status(200).json(posts);
 });
@@ -101,6 +109,11 @@ const deletePost = asyncHandler(async (req, res) => {
   if (post) {
     if (post.userId.toString() === req.user.id) {
       await post.remove();
+
+      const user = await User.findOne({ _id: req.user.id })
+      user.score = user.score - 10
+      await user.save()
+
       res.json({ message: "Post deleted" });
     } else {
       res.status(400);
@@ -137,4 +150,35 @@ const likePost = asyncHandler(async (req, res) => {
   }
 });
 
-export { createPost, getAllPosts, updatePost, deletePost, likePost, getPost };
+/**
+ * @desc    Add a comment
+ * @route   POST /api/posts/comment/
+ * @access  Private
+*/
+
+const addComment = asyncHandler(async (req, res) => {
+  const { content, postId } = req.body
+
+  const post = await Post.findById(postId).populate({
+    path: "comments.userId",
+    select: "name avatar",
+  })
+
+  if (post) {
+    const comment = {
+      content,
+      userId: req.user.id
+    }
+
+    post.comments.push(comment)
+
+    await post.save()
+    res.status(201).json(post.comments)
+  } else {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+
+})
+
+export { createPost, getAllPosts, updatePost, deletePost, likePost, getPost, addComment };

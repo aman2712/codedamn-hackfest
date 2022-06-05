@@ -3,6 +3,10 @@ import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema(
     {
+        avatar: {
+            type: String,
+            required: true
+        },
         name: {
             type: String,
             required: true,
@@ -16,6 +20,11 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        score: {
+            type: Number,
+            required: true,
+            default: 0
+        }
     },
     {
         timestamps: true,
