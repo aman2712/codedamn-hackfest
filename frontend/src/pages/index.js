@@ -6,3 +6,4 @@ export { default as CreatePost } from "./CreatePost";
 export { default as EditPost } from "./EditPost";
 export { default as UserProfile } from "./UserProfile";
 export { default as EditProfile } from "./EditProfile";
+export { default as Guides } from "./Guides";

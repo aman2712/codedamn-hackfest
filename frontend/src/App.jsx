@@ -9,6 +9,7 @@ import {
   EditPost,
   UserProfile,
   EditProfile,
+  Guides,
 } from "./pages";
 import { Navbar } from "./components";
 import { AuthProvider, PostsProvider } from "./context";
@@ -23,6 +24,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route index path="/" element={<Home />} />
+            <Route path="/guides" element={<Guides />} />
             <Route path="/user/:id" element={<UserProfile />} />
             <Route element={<ProtectedRoutes />}>
               <Route path="/create" element={<CreatePost />} />

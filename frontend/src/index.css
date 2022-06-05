@@ -84,3 +84,7 @@ a {
 input[type="file"] {
   font-family: "Poppins", sans-serif;
 }
+
+.block {
+  display: block;
+}
