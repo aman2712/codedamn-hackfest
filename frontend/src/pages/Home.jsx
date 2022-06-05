@@ -3,6 +3,7 @@ import { PostsContext } from "../context/PostsContext";
 import { AuthContext } from "../context/AuthContext";
 import styles from "../styles/pages/Home.module.css";
 import TimeAgo from "react-timeago";
+import { Menu } from "@headlessui/react";
 
 import {
   AiOutlineHeart,
@@ -11,6 +12,7 @@ import {
   AiOutlineEye,
 } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
+import PostMenu from "../components/PostMenu";
 
 const Home = () => {
   const { posts, getPosts, likePost } = useContext(PostsContext);
@@ -45,6 +47,7 @@ const Home = () => {
                     src={post.image}
                     alt="Post image"
                     className={styles.postImage}
+                    loading="lazy"
                   />
                 </a>
               )}
@@ -84,6 +87,8 @@ const Home = () => {
                   <AiOutlineEye className={styles.icons} size={21} />
                 </a>
               )}
+
+              <PostMenu id={post._id} />
             </div>
           </div>
         ))}

@@ -28,6 +28,25 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Create a post
+ * @route   POST /api/posts/:id
+ * @access  Public
+ */
+
+const getPost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const post = await Post.findById(id);
+
+  if (post) {
+    res.status(201).json(post);
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+/**
  * @desc    Get all posts
  * @route   GET /api/posts
  * @access  Public
@@ -52,14 +71,14 @@ const updatePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
   if (post) {
-    if (post.userId === req.user.id) {
-      await Post.findOneAndUpdate(req.params.id, req.body, (err) => {
-        if (err) {
-          res.status(404).json({ message: "Post not found" });
-        } else {
-          res.status(200).json({ message: "Post updated" });
-        }
-      });
+    if (post.userId.toString() === req.user.id) {
+      Post.findByIdAndUpdate(req.params.id, req.body)
+        .then((data) => {
+          return res.status(200).json({ message: "Post updated" });
+        })
+        .catch((err) => {
+          return res.status(404).json({ message: "Post not found" });
+        });
     } else {
       res.status(400);
       throw new Error("Not authorized to edit the post");
@@ -118,4 +137,4 @@ const likePost = asyncHandler(async (req, res) => {
   }
 });
 
-export { createPost, getAllPosts, updatePost, deletePost, likePost };
+export { createPost, getAllPosts, updatePost, deletePost, likePost, getPost };

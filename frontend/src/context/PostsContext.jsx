@@ -17,6 +17,15 @@ const PostsProvider = ({ children }) => {
     }
   };
 
+  const getPost = async (id) => {
+    try {
+      const { data } = await axios.get(`/api/posts/${id}`);
+      return data;
+    } catch (error) {
+      // toast.error(error.response.data.message);
+    }
+  };
+
   const createPost = async (content, image, githubLink, liveDemoLink) => {
     try {
       const config = {
@@ -32,6 +41,27 @@ const PostsProvider = ({ children }) => {
       );
     } catch (error) {
       // Will do later
+    }
+  };
+
+  const editPost = async (id, content, image, githubLink, liveDemoLink) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      console.log(content, image, githubLink, liveDemoLink);
+      const result = await axios.put(
+        `/api/posts/update/${id}`,
+        { content, image, githubLink, liveDemoLink },
+        config
+      );
+    } catch (error) {
+      // Will do later
+      console.log(error);
     }
   };
 
@@ -52,7 +82,15 @@ const PostsProvider = ({ children }) => {
 
   return (
     <PostsContext.Provider
-      value={{ posts, createPost, getPosts, likePost, setPosts }}
+      value={{
+        posts,
+        createPost,
+        getPosts,
+        likePost,
+        setPosts,
+        getPost,
+        editPost,
+      }}
     >
       {children}
     </PostsContext.Provider>

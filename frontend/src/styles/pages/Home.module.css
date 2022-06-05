@@ -49,7 +49,7 @@
 .postBottom {
   display: flex;
   align-items: center;
-  /* gap: 35px; */
+  width: 100%;
 }
 
 .postBottom button {
