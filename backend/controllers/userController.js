@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       name: user.name,
       email: user.email,
+      score: user.score,
       token: generateToken(user._id),
     });
   } else {
@@ -67,6 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       name: user.name,
       email: user.email,
+      score: user.score,
       token: generateToken(user._id),
     });
   } else {
@@ -92,6 +94,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       name: user.name,
       email: user.email,
+      score: user.score,
       posts,
     });
   } else {
@@ -121,6 +124,7 @@ const editUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       avatar: updatedUser.avatar,
+      score: updatedUser.score,
       token: generateToken(updatedUser._id),
     })
   } else {

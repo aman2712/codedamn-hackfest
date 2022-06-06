@@ -19,6 +19,7 @@
 .name {
     font-size: 40px;
     font-weight: 700;
+    margin-right: 10px;
 }
 
 .posts {
@@ -29,6 +30,15 @@
 .editProfileBtn {
     display: block;
     text-decoration: none;
+}
+
+.nameAndScore {
+    display: flex;
+    align-items: center;
+}
+
+.score {
+    font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {

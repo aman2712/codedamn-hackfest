@@ -41,7 +41,10 @@ const UserProfile = () => {
             <div className={styles.userDetails}>
                 <img src={user.avatar} className={styles.userAvatar} />
                 <div>
-                    <p className={styles.name}>{user.name}</p>
+                    <div className={styles.nameAndScore}>
+                        <p className={styles.name}>{user.name}</p>
+                        <p className={styles.score}> ‣ {user.score} Points</p>
+                    </div>
                     {id === currentUser?._id && <Link to={`/edit-profile`} className={`${styles.editProfileBtn}`}>Edit Profile</Link>}
                 </div>
             </div>
@@ -53,7 +56,7 @@ const UserProfile = () => {
             </div>
             <CommentDialog id={activePostId} isOpen={isCommentPopupOn}
                 onClose={handleCloseComments} />
-        </div>
+        </div >
     )
 }
 
