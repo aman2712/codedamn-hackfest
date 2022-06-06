@@ -19,7 +19,8 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 .form input[type="text"],
@@ -46,7 +47,7 @@
 }
 
 .fileUploadWrap.padding {
-    padding: 60px;
+    padding: 50px;
 }
 
 .form>button {
@@ -88,4 +89,10 @@ button.deleteBtn {
     cursor: pointer;
     display: flex;
     border: 3px solid rgb(180, 0, 0);
+}
+
+@media screen and (max-width:768px) {
+    .title {
+        text-align: center;
+    }
 }

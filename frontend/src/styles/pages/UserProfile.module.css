@@ -43,10 +43,22 @@
 
 @media screen and (max-width: 768px) {
     .userProfile {
-        padding: 20px;
+        padding: 10px;
     }
 
     .posts {
         width: 100%;
+    }
+
+    .nameAndScore {
+        display: block;
+    }
+
+    .name {
+        font-size: 30px;
+    }
+
+    .score {
+        font-size: 20px;
     }
 }
